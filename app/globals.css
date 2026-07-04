@@ -124,6 +124,12 @@ body { color: var(--gray-800); background: var(--white); overflow-x: hidden; lin
 @keyframes circleFloat { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-6px) scale(1.03); } }
 .tree-circle-float { animation: circleFloat 4s ease-in-out infinite; }
 
+/* Globe-style flag badges (Team section) */
+.globe-ring::before {
+  content: ""; position: absolute; inset: -8px; border-radius: 50%;
+  border: 1.5px dashed rgba(24, 71, 212, 0.28); animation: rotateDash 9s linear infinite;
+}
+
 @keyframes rotateDash { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 .dash-ring::after {
   content: ""; position: absolute; inset: -14px; border-radius: 50%;

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useLang } from "@/lib/LanguageContext";
-import { flagEmoji } from "@/lib/flags";
+import { flagUrl } from "@/lib/flags";
 import Reveal from "./Reveal";
 import SectionTag from "./SectionTag";
 
@@ -29,24 +29,38 @@ export default function Team() {
           <p dangerouslySetInnerHTML={{ __html: t.team.intro }} />
         </Reveal>
 
-        <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-9 gap-3 sm:gap-4 mb-14">
+        <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-9 gap-3 sm:gap-4 mb-14" style={{ perspective: 1200 }}>
           {t.team.flags.map((code, i) => (
             <motion.div
               key={code}
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              initial={{ opacity: 0, y: 26, scale: 0.4, rotateY: -110 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, rotateY: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: (i % 9) * 0.05 }}
-              whileHover={{ y: -6, scale: 1.05 }}
-              className="flex flex-col items-center gap-2 p-3.5 rounded-[20px] bg-white border border-gray200 shadow-sm2 cursor-default"
+              transition={{ type: "spring", stiffness: 90, damping: 12, delay: (i % 9) * 0.06 }}
+              whileHover={{ y: -6, scale: 1.08 }}
+              className="flex flex-col items-center gap-2.5 p-3.5 rounded-[20px] bg-white border border-gray200 shadow-sm2 cursor-default"
+              style={{ transformOrigin: "center", transformStyle: "preserve-3d" }}
             >
-              <motion.span
-                animate={{ y: [0, -4, 0], rotate: [0, 2, -1.5, 0] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                className="text-4xl leading-none"
+              <div
+                className="globe-ring tree-circle-float relative w-[58px] h-[58px]"
+                style={{ animationDelay: `${(i % 6) * 0.35}s` }}
               >
-                {flagEmoji[code]}
-              </motion.span>
+                <div className="relative w-full h-full rounded-full overflow-hidden ring-[3px] ring-white shadow-md2">
+                  <img
+                    src={flagUrl(code)}
+                    alt={`${t.team.countries[i]} flag`}
+                    width={58}
+                    height={58}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover"
+                  />
+                  <div
+                    className="absolute inset-0 rounded-full pointer-events-none"
+                    style={{ background: "radial-gradient(circle at 32% 26%, rgba(255,255,255,0.45), transparent 42%), radial-gradient(circle at 70% 82%, rgba(0,0,0,0.18), transparent 55%)" }}
+                  />
+                </div>
+              </div>
               <span className="text-[10px] font-bold text-gray400 uppercase">{code}</span>
               <span className="text-[10px] font-semibold text-gray600 text-center leading-tight">{t.team.countries[i]}</span>
             </motion.div>

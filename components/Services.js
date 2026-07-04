@@ -5,6 +5,30 @@ import { useLang } from "@/lib/LanguageContext";
 import Reveal from "./Reveal";
 import SectionTag from "./SectionTag";
 
+const cardVariants = {
+  hidden: { opacity: 0, y: -110, rotateX: -75, scale: 0.88 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 65,
+      damping: 11,
+      mass: 0.9,
+      delay: (i % 4) * 0.12,
+      staggerChildren: 0.09,
+      delayChildren: (i % 4) * 0.12 + 0.32,
+    },
+  }),
+};
+
+const textVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+};
+
 export default function Services() {
   const { t } = useLang();
 
@@ -41,18 +65,37 @@ export default function Services() {
           <p className="text-white/60 text-[16px] leading-relaxed">{t.services.sub}</p>
         </Reveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" style={{ perspective: 1400 }}>
           {t.services.items.map((s, i) => (
-            <Reveal key={s.title} delay={(i % 4) * 0.06} y={28}>
+            <motion.div
+              key={s.title}
+              custom={i}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              className="h-full"
+              style={{ transformOrigin: "top center" }}
+            >
               <div className="group relative overflow-hidden bg-white/5 backdrop-blur-md rounded-[18px] p-7 border border-white/10 hover:-translate-y-1.5 hover:border-transparent transition-all duration-300 h-full">
                 <div className="absolute inset-0 bg-grad-main opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative z-[1] w-[52px] h-[52px] rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-2xl mb-4.5 group-hover:bg-white/20 transition-colors">
+                <motion.div
+                  variants={textVariants}
+                  className="relative z-[1] w-[52px] h-[52px] rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-2xl mb-4.5 group-hover:bg-white/20 transition-colors"
+                >
                   {s.icon}
-                </div>
-                <h3 className="relative z-[1] font-display font-extrabold text-[16px] text-white mb-2">{s.title}</h3>
-                <p className="relative z-[1] text-[13.5px] text-white/55 group-hover:text-white/80 leading-relaxed transition-colors">{s.desc}</p>
+                </motion.div>
+                <motion.h3 variants={textVariants} className="relative z-[1] font-display font-extrabold text-[16px] text-white mb-2">
+                  {s.title}
+                </motion.h3>
+                <motion.p
+                  variants={textVariants}
+                  className="relative z-[1] text-[13.5px] text-white/55 group-hover:text-white/80 leading-relaxed transition-colors"
+                >
+                  {s.desc}
+                </motion.p>
               </div>
-            </Reveal>
+            </motion.div>
           ))}
         </div>
       </div>
