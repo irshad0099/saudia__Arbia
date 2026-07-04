@@ -18,8 +18,8 @@ export default function Footer() {
   return (
     <footer className="bg-navy text-white pt-20 pb-8 px-6">
       <div className="max-w-[1440px] mx-auto">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr] gap-10 mb-14">
-          <div>
+        <div className="grid grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr] gap-x-6 gap-y-10 sm:gap-10 mb-14">
+          <div className="col-span-2 lg:col-span-1">
             <span className="font-display font-black text-2xl bg-grad-main bg-clip-text text-transparent block mb-4">NexaCore</span>
             <p className="text-sm text-white/45 leading-relaxed max-w-[280px] mb-6">{t.footer.desc}</p>
             <div className="flex gap-2.5">

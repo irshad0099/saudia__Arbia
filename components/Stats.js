@@ -20,7 +20,7 @@ function Counter({ target, suffix }) {
   }, [inView, target]);
 
   return (
-    <span ref={ref} className="font-display font-black text-white text-[38px] sm:text-[54px] leading-none">
+    <span ref={ref} className="font-display font-black text-white text-[28px] sm:text-[42px] lg:text-[54px] leading-none tracking-tight whitespace-nowrap">
       {display}
       {suffix}
     </span>
@@ -32,7 +32,7 @@ export default function Stats() {
 
   return (
     <section className="bg-grad-main py-16 px-6">
-      <div className="max-w-[1000px] mx-auto grid grid-cols-2 sm:grid-cols-4 rounded-[28px] overflow-hidden bg-white/20" style={{ gap: "1px" }}>
+      <div className="max-w-[1000px] mx-auto grid grid-cols-2 lg:grid-cols-4 rounded-[28px] overflow-hidden bg-white/20" style={{ gap: "1px" }}>
         {t.stats.map((s, i) => (
           <motion.div
             key={s.label}
@@ -40,7 +40,7 @@ export default function Stats() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.08 }}
-            className="p-8 sm:p-11 text-center"
+            className="p-4 sm:p-8 lg:p-11 text-center"
           >
             <Counter target={s.target} suffix={s.suffix} />
             <div className="text-[13px] sm:text-sm text-white/75 font-semibold mt-2">{s.label}</div>

@@ -152,10 +152,14 @@ body { color: var(--gray-800); background: var(--white); overflow-x: hidden; lin
 .faq-arrow { transition: transform 0.3s; }
 .faq-item.open .faq-arrow { transform: rotate(180deg); }
 
-/* Portfolio hover overlay */
-.port-card .port-overlay { opacity: 0; transition: opacity 0.35s; }
-.port-card:hover .port-overlay { opacity: 1; }
-.port-card:hover .port-img { transform: scale(1.06); }
+/* Portfolio hover overlay — always visible on touch devices (no hover to reveal it),
+   hidden-until-hover only on devices with a real mouse pointer. */
+.port-overlay { opacity: 1; transition: opacity 0.35s; }
+@media (hover: hover) and (pointer: fine) {
+  .port-card .port-overlay { opacity: 0; }
+  .port-card:hover .port-overlay { opacity: 1; }
+  .port-card:hover .port-img { transform: scale(1.06); }
+}
 .port-img { transition: transform 0.5s ease; }
 
 .grad-em em, .grad-em strong {
