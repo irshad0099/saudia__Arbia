@@ -20,7 +20,16 @@ function FeaturedCard({ f, delay }) {
         <div className="relative flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
           <div className="flex-1 min-w-0 w-full">
             <div className="flex items-center gap-4 mb-5">
-              <img src={f.logo} alt={f.name} className="w-16 h-16 rounded-2xl object-cover flex-shrink-0 shadow-lg2" />
+              {f.logo ? (
+                <img src={f.logo} alt={f.name} className="w-16 h-16 rounded-2xl object-cover flex-shrink-0 shadow-lg2" />
+              ) : (
+                <div
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg2 text-3xl"
+                  style={{ background: `linear-gradient(135deg, ${f.color} 0%, ${f.color}cc 100%)` }}
+                >
+                  {f.icon}
+                </div>
+              )}
               <div>
                 <div className="text-[11px] text-gold-light font-bold uppercase tracking-wide mb-1">{f.tag}</div>
                 <div className="text-white font-display font-black text-xl sm:text-2xl leading-tight">{f.name}</div>
