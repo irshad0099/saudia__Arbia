@@ -1,9 +1,5 @@
 import { NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
-
-const DATA_DIR = path.join(process.cwd(), "data");
-const LEADS_FILE = path.join(DATA_DIR, "leads.json");
+import { getDb } from "@/lib/mongodb";
 
 const rateLimitStore = new Map();
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
@@ -37,7 +33,6 @@ export async function POST(request) {
 
     const body = await request.json();
     const lead = {
-      id: `lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
       firstName: sanitize(body.firstName),
       lastName: sanitize(body.lastName),
       email: sanitize(body.email),
@@ -46,7 +41,7 @@ export async function POST(request) {
       message: sanitize(body.message),
       lang: sanitize(body.lang) || "ar",
       status: "new",
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(),
       ip,
     };
 
@@ -54,15 +49,8 @@ export async function POST(request) {
       return NextResponse.json({ ok: false, error: "Invalid form data." }, { status: 400 });
     }
 
-    await fs.mkdir(DATA_DIR, { recursive: true });
-    let leads = [];
-    try {
-      leads = JSON.parse(await fs.readFile(LEADS_FILE, "utf-8"));
-    } catch {
-      leads = [];
-    }
-    leads.push(lead);
-    await fs.writeFile(LEADS_FILE, JSON.stringify(leads, null, 2), "utf-8");
+    const db = await getDb();
+    const result = await db.collection("leads").insertOne(lead);
 
     // Email delivery is stubbed locally — wire a real provider (Resend/SendGrid/SMTP)
     // once API keys are available.
@@ -70,7 +58,7 @@ export async function POST(request) {
       `\n[stub email] → hello@nexacore.ai\nNew enquiry: ${lead.firstName} ${lead.lastName} <${lead.email}>\nService: ${lead.service}\nMessage: ${lead.message}\n`
     );
 
-    return NextResponse.json({ ok: true, id: lead.id });
+    return NextResponse.json({ ok: true, id: result.insertedId });
   } catch (err) {
     console.error("[contact] failed:", err);
     return NextResponse.json({ ok: false, error: "Server error." }, { status: 500 });

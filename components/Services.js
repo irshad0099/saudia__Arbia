@@ -43,9 +43,18 @@ export default function Services() {
         }}
       />
       <motion.div
-        className="absolute top-10 -left-20 w-[400px] h-[400px] rounded-full bg-blue/20 blur-[120px]"
-        animate={{ scale: [1, 1.15, 1] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -top-24 -left-24 w-[620px] h-[620px] pointer-events-none"
+        style={{
+          backgroundImage: "url(/visuals/ai-sphere-particles.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          mixBlendMode: "screen",
+          opacity: 0.6,
+          maskImage: "radial-gradient(circle at 40% 40%, black 0%, transparent 68%)",
+          WebkitMaskImage: "radial-gradient(circle at 40% 40%, black 0%, transparent 68%)",
+        }}
+        animate={{ scale: [1, 1.08, 1] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         className="absolute bottom-10 -right-20 w-[400px] h-[400px] rounded-full bg-cyan/10 blur-[120px]"

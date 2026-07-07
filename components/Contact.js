@@ -40,8 +40,18 @@ export default function Contact() {
     "w-full px-4 py-3.5 rounded-[10px] text-sm border-[1.5px] border-gray200 bg-gray50 text-gray800 outline-none transition-colors focus:border-blue focus:bg-white focus:shadow-[0_0_0_4px_rgba(24,71,212,.08)]";
 
   return (
-    <section id="contact" className="bg-grad-hero py-24 px-6">
-      <div className="max-w-[1200px] mx-auto grid lg:grid-cols-2 gap-16 items-start">
+    <section id="contact" className="relative overflow-hidden bg-grad-hero py-24 px-6">
+      <div
+        className="absolute -top-16 end-0 w-[520px] h-[520px] pointer-events-none opacity-[0.55]"
+        style={{
+          backgroundImage: "url(/visuals/ai-sphere-glass.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          maskImage: "radial-gradient(circle at 60% 40%, black 0%, transparent 65%)",
+          WebkitMaskImage: "radial-gradient(circle at 60% 40%, black 0%, transparent 65%)",
+        }}
+      />
+      <div className="relative max-w-[1200px] mx-auto grid lg:grid-cols-2 gap-16 items-start">
         <Reveal>
           <SectionTag>{t.contact.tag}</SectionTag>
           <h2
